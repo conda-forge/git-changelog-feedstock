@@ -6,7 +6,7 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/git_changelog-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/git_changelog-{{ version }}.tar.gz
   sha256: c772191fa96e584b3ff29b1a67fad6d1b4ee2a24647947a28fb1a8b229682421
 
 build:
@@ -14,15 +14,15 @@ build:
   entry_points:
     - git-changelog = git_changelog.cli:main
   script: {{ PYTHON }} -m pip install . -vv
-  number: 0
+  number: 1
 
 requirements:
   host:
-    - python >=3.8
+    - python {{ python_min }}
     - pdm-backend
     - pip
   run:
-    - python >=3.8
+    - python >={{ python_min }}
     - appdirs >=1.4
     - jinja2 >=2.10
     - semver >=2.13
@@ -36,6 +36,7 @@ test:
     - git-changelog --help
   requires:
     - pip
+    - python {{ python_min }}
 
 about:
   summary: Automatic Changelog generator using Jinja2 templates.
